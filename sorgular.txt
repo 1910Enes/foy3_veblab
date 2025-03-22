@@ -36,9 +36,10 @@ FROM calisanlar c
 WHERE EXISTS (SELECT 1 FROM ikramiye WHERE ikramiye_calisan_id = c.calisan_id);
 
 -- 9) Yönetici veya Müdür olan çalışanlar
-SELECT ad, soyad, unvan_calisan 
-FROM calisanlar 
-WHERE calisan_id IN (SELECT unvan_calisan_id FROM unvan WHERE unvan_calisan IN ('Yönetici', 'Müdür'));
+SELECT c.ad, c.soyad, u.unvan_calisan
+FROM calisanlar c
+JOIN unvan u ON c.calisan_id = u.unvan_calisan_id
+WHERE u.unvan_calisan IN ('Yönetici', 'Müdür');
 
 -- 10) Her bir birimde en yüksek maaş alan çalışanlar
 SELECT ad, soyad, maas 
